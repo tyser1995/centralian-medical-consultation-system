@@ -1,16 +1,12 @@
 <!-- Modal -->
-<form action="" method="POST" id="myForm">
-    <div class="modal fade" data-keyboard="false" data-backdrop="static" id="addRowModal" tabindex="-1" role="dialog"
-        aria-hidden="true">
+<form action="<?php echo base_url()?>appointments/add_invitation_link" method="POST" enctype="multipart/form-data">
+    <div class="modal fade" data-keyboard="false" data-backdrop="static" id="myForm_add_invitation_link" tabindex="-1"
+        role="dialog" aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header bg-secondary">
                     <h5 class="modal-title">
-                        <span class="fw-mediumbold">
-                            New</span>
-                        <span class="fw-light">
-                            Row
-                        </span>
+                        Appointment Videotelephony
                     </h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
@@ -18,28 +14,19 @@
                 </div>
                 <div class="modal-body">
                     <div class="row p-3" id="data_for_edit">
-                        <div class="col-md-12" id="error_msg">
-                        </div>
+                        <input type="hidden" id="add_invitation_link_appt_id" name="id">
+                        <input type="hidden" id="add_invitation_link_patient_id" name="patient_id">
                         <div class="col-md-12">
                             <div class="form-group form-group-default">
-                                <label><span class="text-danger">*</span> URL or Link</label>
-                                <input type="text" name="message" id="message" class="form-control"
-                                    placeholder="Url or link" required>
-                                <input type="hidden" name="id" id="id" class="form-control">
+                                <label><span class="text-danger">*</span> Add Invitation Link</label>
+                                <input type="text" name="message" id="add_invitation_link_invitation_link" class="form-control">
                             </div>
                         </div>
-                        <!-- <div class="col-md-12">
-                            <div class="form-group form-group-default">
-                                <label><span class="text-danger">*</span> Fee</label>
-                                <input  type="text" name="fee" id="fee"class="form-control" placeholder="0.00" oninput="this.value = this.value.replace(/[^0-9.]/g, &quot;&quot;); this.value = this.value.replace(/(\..*)\./g, &quot;$1&quot;)" required>
-                            </div>
-                        </div> -->
                     </div>
                 </div>
                 <div class="modal-footer no-bd">
-                    <button type="submit" id="btnssave" class="btn btn-secondary"><i class="fa fa-save"></i>
+                    <button type="submit" class="btn btn-secondary" data-status="1"><i class="fa fa-save"></i>
                         Save</button>
-                    <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
                 </div>
             </div>
         </div>

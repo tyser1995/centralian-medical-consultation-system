@@ -94,6 +94,7 @@ class Appointments_model extends CI_Model{
         );
        
         $this->db->insert('appointments',$data);
+        $this->db->insert('videotelephony',$data);
         $id_appointment = $this->db->insert_id();
 
         if($travel_history == null){$travel_history =  0;}else{$travel_history = 1;}
@@ -116,7 +117,12 @@ class Appointments_model extends CI_Model{
         // die($this->db->last_query());
     }
 
-
+    public function saveInvitationLink($data){
+        $this->appointment_model->update();
+        $msg = "Invitation was succesfully updated";
+        $this->session->set_userdata('status_msg',$msg);
+        $this->session->set_userdata('stat_msg_type','success');
+    }
 
     public function cancel(){
         $this->customlib->checkLogin();
@@ -216,6 +222,24 @@ class Appointments_model extends CI_Model{
             'message' => $message,
         );
         $this->db->insert('notifications',$array);
+    }
+
+    public function add_invitation_link(){
+        $this->customlib->checkLogin();
+        $id = $this->input->post('id');
+        $patient_id = $this->input->post('patient_id');
+        $invitation_link = $this->input->post('message');
+        $this->db->where('id',$id);
+        $this->db->update('appointments',$this->input->post());
+        $message = 'Your doctor '.$_SESSION['last_name'].', '. $_SESSION['first_name'].' reschedule your appointment with the reference number of APPT-'.$id.' with the invitation link ';
+        $array = array(
+            'id_user' => $patient_id,
+            'id_transaction' => $id,
+            'message' => $message,
+            'invitation_link' => $invitation_link,
+        );
+        $this->db->insert('notifications',$array);
+        
     }
 
     public function appointment_counter($status){

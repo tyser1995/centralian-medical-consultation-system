@@ -125,14 +125,58 @@
 									<span class="badge badge-info"><?= $this->customlib->notifications_counter() ?></span>
 								</a>
 							</li>
-							<li class="nav-item">
+							<!-- <li class="nav-item">
 								<a href="<?= base_url()?>videotelephony/">
 									<i class="fas fa-video"></i>
 									<p>Videotelephony</p>
 									<span class="badge badge-info"><?= $this->customlib->videotelephony_counter() ?></span>
 								</a>
-							</li>
+							</li> -->
 						<?php } ?>
+						<!-- <li class="nav-item">
+							<a data-toggle="collapse" href="#sidebarLayouts" class="collapsed" aria-expanded="false">
+								<i class="fas fa-calendar-alt"></i>
+								<p>Videotelephony</p>
+								<span class="caret"></span>
+							</a>
+							<div class="collapse" id="sidebarLayouts" style="">
+								<ul class="nav nav-collapse">
+
+
+									<?php
+									if($_SESSION['id_user_role'] != 4){
+										?>
+										<li>
+											<a href="<?= base_url()?>videotelephony/index/0">
+												<span class="sub-item">Pending</span>
+												<span class="badge badge-info"><?= $this->customlib->appointment_counter(0) ?></span>
+											</a>
+										</li>
+										<?php
+									}
+									?>
+
+									<li>
+										<a href="<?= base_url()?>videotelephony/index/1">
+											<span class="sub-item">Approved</span>
+											<span class="badge badge-info"><?= $this->customlib->appointment_counter(1) ?></span>
+										</a>
+									</li>
+									<li>
+										<a href="<?= base_url()?>videotelephony/index/2">
+											<span class="sub-item">Completed</span>
+											<span class="badge badge-info"><?= $this->customlib->appointment_counter(2) ?></span>
+										</a>
+									</li>
+									<li>
+										<a href="<?= base_url()?>videotelephony/index/3">
+											<span class="sub-item">Cancelled</span>
+											<span class="badge badge-info"><?= $this->customlib->appointment_counter(3) ?></span>
+										</a>
+									</li>
+								</ul>
+							</div>
+						</li> -->
 						<li class="nav-item">
 							<a data-toggle="collapse" href="#sidebarLayouts" class="collapsed" aria-expanded="false">
 								<i class="fas fa-calendar-alt"></i>

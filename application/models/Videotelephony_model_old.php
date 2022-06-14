@@ -3,14 +3,10 @@
 class Videotelephony_model extends CI_Model{
 
     public function get(){
-        $this->db->select('v.*,CONCAT(c.last_name,",",c.first_name) as patient_name,CONCAT(d.last_name,",",d.first_name) as doctor_name, c.contact,c.address');
-        $this->db->join('user_profile c','v.patient_id = c.id');
-        $this->db->join('users e','v.doctor_id = e.id_user','left');
-        $this->db->join('user_profile d','d.id = e.id_user','left');              
-        $this->db->order_by('v.id','desc');
-        $this->db->where('v.id_user',$_SESSION['id_user']);
-        $this->db->where('v.del_status = 1');
-        $data =  $this->db->get('videotelephony v');
+        $this->db->order_by('id','desc');
+        $this->db->where('id_user',$_SESSION['id_user']);
+        // $this->db->where('del_status = 1');
+        $data =  $this->db->get('videotelephony');
         return $data->result();
     }
 

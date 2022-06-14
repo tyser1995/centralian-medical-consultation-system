@@ -130,6 +130,12 @@ if($this->uri->segment(3) == 0){
 														if($_SESSION['id_user_role'] == 4){
 															?>
 															<button type="button" class="btn btn-secondary btn-sm" onclick="getDoctor_remarks('<?= $row->id ?>','<?= $row->patient_id ?>')" title="Add Remarks"><i class="fas fa-prescription"></i></button>
+															
+															<?php if($_SESSION['id_user_role'] == 4 && is_null($row->message)) {?>
+															<button type="button" class="btninvite btnAdd btn btn-success btn-sm" title="Add Invitation Link" onclick="add_invitation_link('<?= $row->id ?>')"><i class="fas fa-plus">Add Invitation URL</i></button>
+														<?php } else{ ?>
+															<button type="button" class="btninvite btn btn-info btn-sm" title="Edit Invitation Link" onclick="add_invitation_link('<?= $row->id ?>')"><i class="fa fa-edit">Edit Invitation URL</i></button>
+														<?php }?>
 															<?php
 														}
 														?>
@@ -172,7 +178,8 @@ if($this->uri->segment(3) == 0){
 			</div>
 		</div>
 	</div>
-
+	
+<?php $this->load->view('dashboard/admin/modal/add-videotelephony.php')?>	
 <?php $this->load->view('dashboard/admin/modal/add-appointment.php')?>
 <?php $this->load->view('dashboard/admin/modal/cancel-appointment-modal.php')?>
 <?php $this->load->view('dashboard/admin/modal/add-appt-ratings.php')?>
@@ -480,6 +487,32 @@ if($this->uri->segment(3) == 0){
 				$("#resched_appt_appnt_date").val(data[0].appnt_date);
 				$("#resched_appt_appnt_time").val(data[0].appnt_time);
 				$("#resched_appt_patient_id").val(data[0].patient_id);
+				$('#invitation_link').val(data[0].message);
+			},
+			error: function(){
+				swal('Something went wrong');
+			}
+		});
+	}
+
+	function add_invitation_link(id){
+		$('#myForm_add_invitation_link').modal('show');
+
+		$.ajax({
+			type: 'ajax',
+			method: 'post',
+			url: '<?php echo base_url()?>appointments/view',
+			data:{
+				id:id
+				},
+			async: false,
+			dataType: 'text',
+			success: function(response){
+				var data = JSON.parse(response);
+				console.log(data);
+				$("#add_invitation_link_appt_id").val(data[0].id);
+				$("#add_invitation_link_patient_id").val(data[0].patient_id);
+				$('#add_invitation_link_invitation_link').val(data[0].message);
 			},
 			error: function(){
 				swal('Something went wrong');

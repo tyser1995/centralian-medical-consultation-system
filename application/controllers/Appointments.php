@@ -11,6 +11,7 @@ class Appointments extends CI_Controller {
         $this->load->model('illnesses_model');
         $this->load->model('services_model');
         $this->load->model('user_model');
+        $this->load->model('videotelephony_model');
 	}
 
   public function index($appt_status){
@@ -96,4 +97,11 @@ class Appointments extends CI_Controller {
     redirect($_SERVER['HTTP_REFERER']);
   }
 
+  public function add_invitation_link(){
+    $this->appointments_model->add_invitation_link();
+    $msg = "Invitation Link was successfully added";
+    $this->session->set_userdata('status_msg',$msg);
+    $this->session->set_userdata('status_type','success');
+    redirect($_SERVER['HTTP_REFERER']);
+  }
 }

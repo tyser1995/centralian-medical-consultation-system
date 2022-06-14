@@ -55,8 +55,12 @@
 										<tbody>
 											<?php foreach($notifications as $row): ?>
 											<tr>
-												<td><?= $row->message?></td>
-										
+												<td><?= $row->message?>
+												&nbsp; 
+													<?php if(!is_null($row->invitation_link)) {?>
+													<a target="_blank" href='<?= $row->invitation_link ?>'><?= $row->invitation_link?></a>
+													<?php }?>
+												</td>
 											</tr>
 											<?php endforeach; ?>
 										</tbody>

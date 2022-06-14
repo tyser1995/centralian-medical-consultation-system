@@ -11,10 +11,6 @@ class Videotelephony extends CI_Controller {
         $this->load->library('form_validation');
         $this->load->helper(array('form'));
         $this->load->model('videotelephony_model');
-        $this->load->model('appointments_model');
-        $this->load->model('illnesses_model');
-        $this->load->model('services_model');
-        $this->load->model('user_model');
 
 	}
 
