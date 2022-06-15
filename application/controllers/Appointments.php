@@ -89,6 +89,14 @@ class Appointments extends CI_Controller {
     redirect($_SERVER['HTTP_REFERER']);
   }
 
+  public function patient_remarks(){
+    $this->appointments_model->patient_remarks();
+    $msg = "Stool and X-ray was successfully updated";
+    $this->session->set_userdata('status_msg',$msg);
+    $this->session->set_userdata('status_type','success');
+    redirect($_SERVER['HTTP_REFERER']);
+  }
+
   public function resched_appt(){
     $this->appointments_model->resched_appt();
     $msg = "Record was successfully updated";

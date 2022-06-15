@@ -1,11 +1,11 @@
 <!-- Modal -->
 <form action="" method="POST" id="myForm" enctype="multipart/form-data">
-    <div class="modal fade" data-keyboard="false" data-backdrop="static" id="addRowModalDoctorRemarks" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal fade" data-keyboard="false" data-backdrop="static" id="addRowModalPatientRemarks" tabindex="-1" role="dialog" aria-hidden="true">
         <div class="modal-dialog" role="document">									
             <div class="modal-content">
                 <div class="modal-header bg-secondary">
                     <h5 class="modal-title">
-                        Appointment Remarks
+                        Patient Remarks
                     </h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
@@ -35,17 +35,17 @@
                                 </div>
                             </div>
                             <div class="form-group form-group-default">
-                                <label class="labelRemarks"><span class="text-danger">*</span> Add Remarks</label>
+                                <label class="labelRemarks"><span class="text-danger"></span> Doctor's Remarks</label>
                                 <input type="hidden" id="id3" name="id">
                                 <input type="hidden" id="patient_id3" name="patient_id">
-                                <textarea name="doctor_remarks" id="doctor_remarks" class="form-control textareaPatient" cols="30" rows="10" required></textarea>
+                                <textarea name="doctor_remarks" id="patient_remarks" class="form-control" cols="30" rows="10" readonly></textarea>
                             </div>
                         </div>
                     </div>
                 </div>
                 <div class="modal-footer no-bd">
-                    <button type="button" class="btn btn-success BtnDoctorRemarks" data-status="2"><i class="fa fa-check"></i> Update and Mark as Completed</button>
-                    <button type="button" class="btn btn-secondary BtnDoctorRemarks" data-status="1"><i class="fa fa-save"></i>  Update</button>
+                    <!-- <button type="button" class="btn btn-success BtnDoctorRemarks btnBrowseRemarksPatient" data-status="2"><i class="fa fa-check"></i> Update and Mark as Completed</button> -->
+                    <button type="button" class="btn btn-secondary BtnPatientRemarks" data-status="1"><i class="fa fa-save"></i>  Update</button>
                 </div>
             </div>
         </div>

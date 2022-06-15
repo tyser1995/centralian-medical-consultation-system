@@ -127,9 +127,15 @@ if($this->uri->segment(3) == 0){
 														?>
 
 														<?php
-														if($_SESSION['id_user_role'] == 4){
+														if($_SESSION['id_user_role'] == 3 || $_SESSION['id_user_role'] == 4){
 															?>
-															<button type="button" class="btn btn-secondary btn-sm" onclick="getDoctor_remarks('<?= $row->id ?>','<?= $row->patient_id ?>')" title="Add Remarks"><i class="fas fa-prescription"></i></button>
+															
+															<?php if($_SESSION['id_user_role'] == 3) {?>
+																<button type="button" class="btn btn-secondary btn-sm" onclick="getPatient_remarks('<?= $row->id ?>','<?= $row->patient_id ?>','<?= $_SESSION['id_user_role'] ?>')" title="Add Remarks"><i class="fas fa-prescription"></i></button>
+															<?php } ?>
+															<?php if($_SESSION['id_user_role'] == 4) {?>
+																<button type="button" class="btn btn-secondary btn-sm" onclick="getDoctor_remarks('<?= $row->id ?>','<?= $row->patient_id ?>','<?= $_SESSION['id_user_role'] ?>')" title="Add Remarks"><i class="fas fa-prescription"></i></button>
+															<?php } ?>
 															
 															<?php if($_SESSION['id_user_role'] == 4 && is_null($row->message)) {?>
 															<button type="button" class="btninvite btnAdd btn btn-success btn-sm" title="Add Invitation Link" onclick="add_invitation_link('<?= $row->id ?>')"><i class="fas fa-plus">Add Invitation URL</i></button>
@@ -184,6 +190,7 @@ if($this->uri->segment(3) == 0){
 <?php $this->load->view('dashboard/admin/modal/cancel-appointment-modal.php')?>
 <?php $this->load->view('dashboard/admin/modal/add-appt-ratings.php')?>
 <?php $this->load->view('dashboard/admin/modal/add-doctor-remarks-modal.php')?>
+\<?php $this->load->view('dashboard/admin/modal/add-patient-remarks-modal.php')?>
 <?php $this->load->view('dashboard/admin/modal/resched_appt.php')?>
 <?php $this->load->view('dashboard/template/footer.php')?>
 <?php $this->load->view('dashboard/class/notification.php')?>
@@ -400,6 +407,38 @@ if($this->uri->segment(3) == 0){
 		});
 	})
 
+	$(".BtnPatientRemarks").click(function(){
+		let id = $("#id3").val();
+		//let doctor_remarks = $("#doctor_remarks").val();
+		let patient_id = $("#patient_id3").val();
+		let stool = $("#stool").val();
+		let xray = $("#xray").val();
+		//let status = $(this).attr('data-status');
+
+
+		$.ajax({
+			type: 'ajax',
+			method: 'post',
+			url: '<?= base_url()?>appointments/patient_remarks',
+			data:{
+				id:id,
+				//doctor_remarks:doctor_remarks,
+				patient_id:patient_id,
+				//status:status,
+				stool:stool,
+				xray:xray
+				},
+			async: false,
+			dataType: 'text',
+			success: function(response){
+				location.reload();
+			},
+			error: function(){
+				swal('Something went wrong');
+			}
+		});
+	})
+
 	function getAdmin_Edit(id,patient_id,appnt_date,appnt_time){
 		$('#addRowModal').modal('show');
 		$('#addRowModal').find('.modal-title').text('Assign Doctor');
@@ -419,10 +458,13 @@ if($this->uri->segment(3) == 0){
 		$("#btnUpdate").attr('hidden',false);
 	}
 
-	function getDoctor_remarks(id,patient_id){
+	function getDoctor_remarks(id,patient_id,user_id){
 		$('#addRowModalDoctorRemarks').modal('show');
 		$("#id3").val(id);
 		$("#patient_id3").val(patient_id);
+
+		if(user_id == 4)
+			$('.btnBrowseRemarks').css('display','none');
 
 		$.ajax({
 			type: 'ajax',
@@ -440,6 +482,47 @@ if($this->uri->segment(3) == 0){
 				$("#stool").val(data[0].stool);
 				$("#xray").val(data[0].xray);
 
+				let stool = data[0].stool;
+				let xray = data[0].xray;
+
+				if(stool == ''){
+					stool = 'default_pic.png';
+				}
+
+				if(xray == ''){
+					xray = 'default_pic.png';
+				}
+
+				$(".stoolpic").attr({'src': '<?= base_url()?>public/uploads/stools/'+stool});
+				$(".xraypic").attr({'src': '<?= base_url()?>public/uploads/xray/'+xray});
+
+			},
+			error: function(){
+				swal('Something went wrong');
+			}
+		});
+	}
+
+	function getPatient_remarks(id,patient_id,user_id){
+		$('#addRowModalPatientRemarks').modal('show');
+		$("#id3").val(id);
+		$("#patient_id3").val(patient_id);
+
+		$.ajax({
+			type: 'ajax',
+			method: 'post',
+			url: '<?php echo base_url()?>appointments/view',
+			data:{
+				id:id,
+				patient_id:patient_id
+				},
+			async: false,
+			dataType: 'text',
+			success: function(response){
+				var data = JSON.parse(response);
+				$("#patient_remarks").val(data[0].doctor_remarks);
+				$("#stool").val(data[0].stool);
+				$("#xray").val(data[0].xray);
 				let stool = data[0].stool;
 				let xray = data[0].xray;
 

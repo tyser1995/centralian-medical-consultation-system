@@ -208,6 +208,24 @@ class Appointments_model extends CI_Model{
         $this->db->insert('notifications',$array);
     }
 
+    public function patient_remarks(){
+        $this->customlib->checkLogin();
+        $id = $this->input->post('id');
+        $patient_id = $this->input->post('patient_id');
+        $this->db->where('id',$id);
+        unset($_POST['id_service']);
+        unset($_POST['patient_id']);
+        $this->db->update('appointments',$this->input->post());
+
+        // $message = 'Your doctor '.$_SESSION['last_name'].', '. $_SESSION['first_name'].' added an update with your appointment with the reference number of APPT-'.$id;
+        // $array = array(
+        //     'id_user' => $patient_id,
+        //     'id_transaction' => $id,
+        //     'message' => $message,
+        // );
+        // $this->db->insert('notifications',$array);
+    }
+
     public function resched_appt(){
         $this->customlib->checkLogin();
         $id = $this->input->post('id');
